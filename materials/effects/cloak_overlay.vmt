@@ -1,0 +1,8 @@
+"Refract"
+{
+	"$refractamount" ".02"
+	"$model" "1"
+	"$normalmap" "effects/cloak_overlay"
+	"$bumpframe" "1"
+	"$bluramount" "1"
+}
