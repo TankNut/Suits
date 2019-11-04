@@ -167,4 +167,24 @@ if SERVER then
 			end
 		end
 	end)
+
+	hook.Add("PlayerSetHandsModel", "suit", function(ply, ent)
+		local worn = suit.GetWorn(ply)
+
+		if not IsValid(worn) then
+			return
+		end
+
+		local data = worn.SuitData.Hands
+
+		print(ply:GetModel())
+
+		if data then
+			ent:SetModel(data.Model)
+			ent:SetModel(data.Skin or 0)
+			ent:SetBodyGroups(data.Bodygroups or "0000000")
+
+			return true
+		end
+	end)
 end

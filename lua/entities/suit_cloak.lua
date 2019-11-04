@@ -12,7 +12,9 @@ ENT.AdminSpawnable	= true
 ENT.SuitData = {
 	Model = Model("models/suits/cloak.mdl"),
 
-	Hands = Model("models/weapons/c_arms_combine.mdl"),
+	Hands = {
+		Model = Model("models/weapons/c_arms_combine.mdl")
+	},
 
 	Weapons = {
 		"cloak_remote"

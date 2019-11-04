@@ -13,7 +13,9 @@ ENT.SuitData = {
 	Model = Model("models/player/combine_soldier.mdl"),
 	Material = "models/combine_soldier/combinesoldiersheet",
 
-	Hands = Model("models/weapons/c_arms_combine.mdl"),
+	Hands = {
+		Model = Model("models/weapons/c_arms_combine.mdl")
+	},
 
 	Footsteps = {
 		"npc/combine_soldier/gear1.wav",

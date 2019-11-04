@@ -193,9 +193,7 @@ if SERVER then
 		ply:SetModel(data.Model)
 		ply:SetMaterial(data.Material or "")
 
-		if data.Hands then
-			ply:GetHands():SetModel(data.Hands)
-		end
+		ply:SetupHands()
 
 		local speed = self:GetSpeedMod(ply)
 
