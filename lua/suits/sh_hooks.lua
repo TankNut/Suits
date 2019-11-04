@@ -177,8 +177,6 @@ if SERVER then
 
 		local data = worn.SuitData.Hands
 
-		print(ply:GetModel())
-
 		if data then
 			ent:SetModel(data.Model)
 			ent:SetModel(data.Skin or 0)
