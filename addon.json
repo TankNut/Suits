@@ -1,0 +1,12 @@
+{
+	"title": "Suits",
+	"type":	"tool",
+	"tags":	["fun", "roleplay"],
+	"ignore":
+	[
+		"*.bat",
+		"*.md",
+		".git*",
+		"LICENSE"
+	]
+}
