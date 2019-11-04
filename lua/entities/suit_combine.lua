@@ -27,6 +27,12 @@ ENT.SuitData = {
 
 if CLIENT then
 	function ENT:RenderScreenspaceEffects()
+		local ply = LocalPlayer()
+
+		if ply:GetViewEntity() != ply then
+			return
+		end
+
 		DrawMaterialOverlay("effects/combine_binocoverlay", 0)
 	end
 end
