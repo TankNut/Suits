@@ -34,8 +34,8 @@ if SERVER then
 		ply.CloakVal = 0
 	end
 
-	function ENT:OnUnWear(ply)
-		self.BaseClass.OnUnWear(self, ply)
+	function ENT:OnUnwear(ply)
+		self.BaseClass.OnUnwear(self, ply)
 
 		ply:DrawShadow(true)
 		ply:SetDSP(0)
