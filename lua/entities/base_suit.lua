@@ -143,6 +143,43 @@ if SERVER then
 		return 1
 	end
 
+	function ENT:SetupNPCRelationship(ply, npc)
+		if not IsValid(npc) or not npc:IsNPC() then
+			return
+		end
+
+		local classify = npc:Classify()
+		local relationship = self.SuitData.NPCRelationships[classify]
+
+		if relationship then
+			self.StoreData.NPCRelationships[npc] = npc:Disposition(ply)
+
+			npc:AddEntityRelationship(ply, relationship, 99)
+		end
+	end
+
+	function ENT:SetupNPCRelationships(ply)
+		self.StoreData.NPCRelationships = {}
+
+		for _, v in pairs(ents.GetAll()) do
+			self:SetupNPCRelationship(ply, v)
+		end
+	end
+
+	function ENT:RestoreNPCRelationships(ply)
+		if not self.StoreData.NPCRelationships then
+			return
+		end
+
+		for npc, relationship in pairs(self.StoreData.NPCRelationships) do
+			if not IsValid(npc) then
+				continue
+			end
+
+			npc:AddEntityRelationship(ply, relationship, 99)
+		end
+	end
+
 	function ENT:OnWear(ply)
 		self.StoreData = {
 			Model = ply:GetModel(),
@@ -172,6 +209,10 @@ if SERVER then
 				table.insert(self.StoreData.Weapons, ply:Give(v))
 			end
 		end
+
+		if data.NPCRelationships then
+			self:SetupNPCRelationships(ply)
+		end
 	end
 
 	function ENT:OnUnwear(ply)
@@ -191,6 +232,10 @@ if SERVER then
 					ply:StripWeapon(v:GetClass())
 				end
 			end
+		end
+
+		if data.NPCRelationships then
+			self:RestoreNPCRelationships(ply)
 		end
 	end
 end

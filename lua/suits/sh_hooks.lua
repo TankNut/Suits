@@ -149,4 +149,22 @@ if SERVER then
 			ply:EmitSound("items/ammopickup.wav")
 		end)
 	end)
+
+	hook.Add("OnEntityCreated", "suit", function(ent)
+		if not IsValid(ent) or not ent:IsNPC() then
+			return
+		end
+
+		for _, v in pairs(player.GetAll()) do
+			local worn = suit.GetWorn(v)
+
+			if not IsValid(worn) then
+				continue
+			end
+
+			if worn.SuitData.NPCRelationships then
+				worn:SetupNPCRelationship(v, ent)
+			end
+		end
+	end)
 end
