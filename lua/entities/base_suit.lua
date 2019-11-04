@@ -180,35 +180,45 @@ if SERVER then
 		end
 	end
 
-	function ENT:OnWear(ply)
-		self.StoreData = {
-			Model = ply:GetModel(),
-			Material = ply:GetMaterial(),
-			WalkSpeed = ply:GetWalkSpeed(),
-			RunSpeed = ply:GetRunSpeed()
-		}
-
+	function ENT:SetupModel(ply)
 		local data = self.SuitData
 
-		ply:SetModel(data.Model)
-		ply:SetMaterial(data.Material or "")
+		if data.Model then
+			ply:SetModel(data.Model)
+			ply:SetSubMaterial()
+			ply:SetMaterial("")
+		end
+
+		if data.Material then
+			ply:SetMaterial(data.Material)
+		end
+	end
+
+	function ENT:OnWear(ply)
+		self.StoreData = {}
+		self:SetupModel(ply)
 
 		ply:SetupHands()
 
 		local speed = self:GetSpeedMod(ply)
 
-		ply:SetWalkSpeed(self.StoreData.WalkSpeed * speed)
-		ply:SetRunSpeed(self.StoreData.RunSpeed * speed)
+		if speed != 1 then
+			self.StoreData.WalkSpeed = ply:GetWalkSpeed()
+			self.StoreData.RunSpeed = ply:GetRunSpeed()
 
-		if data.Weapons then
+			ply:SetWalkSpeed(self.StoreData.WalkSpeed * speed)
+			ply:SetRunSpeed(self.StoreData.RunSpeed * speed)
+		end
+
+		if self.SuitData.Weapons then
 			self.StoreData.Weapons = {}
 
-			for _, v in pairs(data.Weapons) do
+			for _, v in pairs(self.SuitData.Weapons) do
 				table.insert(self.StoreData.Weapons, ply:Give(v))
 			end
 		end
 
-		if data.NPCRelationships then
+		if self.SuitData.NPCRelationships then
 			self:SetupNPCRelationships(ply)
 		end
 	end
@@ -216,8 +226,7 @@ if SERVER then
 	function ENT:OnUnwear(ply)
 		local data = self.StoreData
 
-		ply:SetModel(data.Model)
-		ply:SetMaterial(data.Material)
+		hook.Run("PlayerSetModel", ply)
 
 		ply:SetupHands()
 
