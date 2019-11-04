@@ -230,8 +230,10 @@ if SERVER then
 
 		ply:SetupHands()
 
-		ply:SetWalkSpeed(data.WalkSpeed)
-		ply:SetRunSpeed(data.RunSpeed)
+		if self.StoreData.WalkSpeed then
+			ply:SetWalkSpeed(data.WalkSpeed)
+			ply:SetRunSpeed(data.RunSpeed)
+		end
 
 		if data.Weapons then
 			for _, v in pairs(data.Weapons) do
