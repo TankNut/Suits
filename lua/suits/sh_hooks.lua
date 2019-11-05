@@ -34,14 +34,14 @@ concommand.Add("suit_drop", function(ply)
 	ply:EmitSound("items/ammopickup.wav")
 end)
 
-hook.Add("PlayerFootstep", "suit", function(ply, _, _, _, volume)
+hook.Add("PlayerFootstep", "suit", function(ply, _, foot, _, volume)
 	local worn = suit.GetWorn(ply)
 
 	if not IsValid(worn) then
 		return
 	end
 
-	return worn:Footstep(ply, volume)
+	return worn:Footstep(ply, foot, volume)
 end)
 
 hook.Add("EntityTakeDamage", "suit", function(ply, dmg)

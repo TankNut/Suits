@@ -55,20 +55,24 @@ function ENT:Initialize()
 	end
 end
 
-function ENT:Footstep(ply, volume)
-	local data = self.SuitData.Footsteps
-	local snd
+function ENT:Footstep(ply, foot, volume)
+	local data = self.SuitData
 
-	if isbool(data) then
+	if isbool(data.Footsteps) then
 		return true
-	elseif isstring(data) then
-		snd = data
-	elseif istable(data) then
-		snd = table.Random(data)
+	end
+
+	local snd = data.Footsteps[foot + 1] -- 1 for left, 2 for right
+
+	if istable(snd) then
+		snd = table.Random(snd)
 	end
 
 	if snd then
-		ply:EmitSound(snd, 75, 100, volume)
+		local pitch = istable(data.FootstepPitch) and math.Rand(unpack(data.FootstepPitch)) or 100
+		local vol = data.FootstepVolume * volume
+
+		ply:EmitSound(snd, 75, pitch, vol, CHAN_BODY)
 
 		return true
 	end
