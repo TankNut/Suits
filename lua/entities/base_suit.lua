@@ -230,6 +230,7 @@ if SERVER then
 	function ENT:OnUnwear(ply)
 		local data = self.StoreData
 
+		ply:SetMaterial("")
 		hook.Run("PlayerSetModel", ply)
 
 		ply:SetupHands()
