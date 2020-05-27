@@ -50,7 +50,7 @@ function SWEP:Holster()
 		return false
 	end
 
-	return self.Owner.CloakVal == 0
+	return self.Owner:GetNWFloat("suit_cloak", 0) == 0
 end
 
 local convar = GetConVar("suit_cloak_time")
@@ -74,7 +74,7 @@ function SWEP:Think()
 	val = math.Remap(val, 0, time, 0, 1)
 	val = math.Clamp(val, 0, 1)
 
-	ply.CloakVal = val
+	ply:SetNWFloat("suit_cloak", val)
 
 	ply:DrawShadow(val == 0)
 	ply:SetDSP(val > 0.1 and 31 or 0)
@@ -141,7 +141,7 @@ if CLIENT then
 			return
 		end
 
-		local val = math.EaseInOut(ply.CloakVal or 0, 1, 1)
+		local val = math.EaseInOut(ply:GetNWFloat("suit_cloak", 0), 1, 1)
 		local tab = {}
 
 		tab["$pp_colour_addr"] = 0
@@ -167,7 +167,7 @@ if CLIENT then
 			return
 		end
 
-		local cloak = math.EaseInOut(ply.CloakVal or 0, 1, 1)
+		local cloak = math.EaseInOut(ply:GetNWFloat("suit_cloak", 0), 1, 1)
 		local val = math.Remap(cloak, 0, 1, 0, -0.1)
 
 		render.UpdateScreenEffectTexture()

@@ -235,7 +235,7 @@ if SERVER then
 
 		ply:SetupHands()
 
-		if self.StoreData.WalkSpeed then
+		if data.WalkSpeed then
 			ply:SetWalkSpeed(data.WalkSpeed)
 			ply:SetRunSpeed(data.RunSpeed)
 		end

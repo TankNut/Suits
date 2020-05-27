@@ -98,11 +98,11 @@ if CLIENT then
 				mat:SetFloat(self.Target, 0)
 			end
 
-			local val = ent.CloakVal or 0
+			local val = ent:GetNWFloat("suit_cloak", 0)
 			local ply = LocalPlayer()
 			local convar = max
 
-			if ply:GetViewEntity() == ply then
+			if ent == ply and ply:GetViewEntity() == ply then
 				convar = max_self
 			end
 
