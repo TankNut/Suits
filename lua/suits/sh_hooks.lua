@@ -1,38 +1,40 @@
 AddCSLuaFile()
 
-concommand.Add("suit_drop", function(ply)
-	local worn = suit.GetWorn(ply)
+if SERVER then
+	concommand.Add("suit_drop", function(ply)
+		local worn = suit.GetWorn(ply)
 
-	if not IsValid(worn) then
-		return
-	end
+		if not IsValid(worn) then
+			return
+		end
 
-	if not worn:CanUnwear(ply) then
-		return
-	end
+		if not worn:CanUnwear(ply) then
+			return
+		end
 
-	suit.Unwear(worn)
+		suit.Unwear(worn)
 
-	local tr = util.TraceLine({
-		start = ply:EyePos(),
-		endpos = ply:EyePos() + (ply:GetAimVector() * 100),
-		filter = ply
-	})
+		local tr = util.TraceLine({
+			start = ply:EyePos(),
+			endpos = ply:EyePos() + (ply:GetAimVector() * 100),
+			filter = ply
+		})
 
-	local pos = tr.HitPos - (tr.HitNormal * 512)
-	local ang = Angle(0, ply:EyeAngles().y + 90, 0)
+		local pos = tr.HitPos - (tr.HitNormal * 512)
+		local ang = Angle(0, ply:EyeAngles().y + 90, 0)
 
-	pos = worn:NearestPoint(pos)
-	pos = worn:GetPos() - pos
-	pos = tr.HitPos + pos
+		pos = worn:NearestPoint(pos)
+		pos = worn:GetPos() - pos
+		pos = tr.HitPos + pos
 
-	worn:SetPos(pos + Vector(0, 0, 1))
-	worn:SetAngles(ang)
+		worn:SetPos(pos + Vector(0, 0, 1))
+		worn:SetAngles(ang)
 
-	worn:PhysWake()
+		worn:PhysWake()
 
-	ply:EmitSound("items/ammopickup.wav")
-end)
+		ply:EmitSound("items/ammopickup.wav")
+	end)
+end
 
 hook.Add("PlayerFootstep", "suit", function(ply, _, foot, _, volume)
 	local worn = suit.GetWorn(ply)
