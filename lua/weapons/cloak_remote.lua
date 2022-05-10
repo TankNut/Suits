@@ -10,7 +10,7 @@ SWEP.WorldModel 			= ""
 SWEP.ViewModelFlip 			= true
 SWEP.UseHands 				= true
 
-SWEP.SwayScale 				= 1
+SWEP.SwayScale 				= -1
 
 SWEP.DrawCrosshair 			= false
 
